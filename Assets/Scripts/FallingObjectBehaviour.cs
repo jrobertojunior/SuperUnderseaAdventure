@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class FallingObjectBehaviour : MonoBehaviour
 {
-  public Rigidbody2D rb;
   public float time = 0.5f;
   void OnCollisionEnter2D(Collision2D other)
   {
@@ -16,7 +15,13 @@ public class FallingObjectBehaviour : MonoBehaviour
 
   IEnumerator FallDown()
   {
+    Rigidbody2D rb = gameObject.GetComponent<Rigidbody2D>();
+
     yield return new WaitForSeconds(time);
     rb.isKinematic = false;
+
+    yield return new WaitForSeconds(5);
+	Destroy(gameObject);
+
   }
 }
