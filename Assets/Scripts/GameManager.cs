@@ -20,11 +20,17 @@ public class GameManager : MonoBehaviour
   private bool showingUi = true;
   private bool gameStarted = false;
 
+  private Transform initialCameraPosition = null;
+  private Transform initialPlayerPosition = null;
+
   void Start()
   {
     // show UI
     pointsText = pointsUI.GetComponent<TextMeshProUGUI>();
     initialHeight = camera.transform.position.y;
+
+    initialCameraPosition = camera.transform;
+    initialPlayerPosition = player.transform;
   }
 
 
@@ -72,6 +78,8 @@ public class GameManager : MonoBehaviour
           {
             state = "menu";
             gameStarted = false;
+            camera.transform.position = initialCameraPosition.position;
+            player.transform.position = initialPlayerPosition.position;
             handleUI(state);
           }
           break;
