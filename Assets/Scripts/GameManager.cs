@@ -7,7 +7,8 @@ public class GameManager : MonoBehaviour
 {
   public GameObject player;
   public GameObject camera;
-  public float initialCameraVelocity = 0.001f;
+  public float cameraVelocity = 1.4f;
+  public float cameraVelocityIncrementor = 0.2f;
   private float initialHeight;
   public GameObject menuUI;
   public GameObject gameoverUI;
@@ -51,7 +52,12 @@ public class GameManager : MonoBehaviour
         }
       case "gaming":
         {
-          camera.transform.position += new Vector3(0, -initialCameraVelocity * Time.deltaTime, 0);
+          // every 10 seconds, increment camera velocity
+          if (Time.time % 10 == 0)
+          {
+            cameraVelocity += cameraVelocityIncrementor;
+          }
+          camera.transform.position += new Vector3(0, (-cameraVelocity - cameraVelocityIncrementor) * Time.deltaTime, 0);
 
           // increase points based on camera height
           points = (int)((initialHeight - camera.transform.position.y) * 10);
@@ -63,7 +69,7 @@ public class GameManager : MonoBehaviour
           float difference = player.transform.position.y - camera.transform.position.y;
 
           // if difference is greater than 4.33 or less than -4.33
-          if (difference > 6 || difference < -6)
+          if (difference > 7 || difference < -6)
           {
             state = "gameover";
             handleUI(state);
