@@ -371,6 +371,7 @@ MonoBehaviour:
   initialCameraVelocity: 0.5
   menuUI: {fileID: 648557597}
   gameoverUI: {fileID: 916341847}
+  pointsUI: {fileID: 1424976601}
 --- !u!4 &150536755
 Transform:
   m_ObjectHideFlags: 0
@@ -457,7 +458,7 @@ Canvas:
   m_RenderMode: 0
   m_Camera: {fileID: 0}
   m_PlaneDistance: 100
-  m_PixelPerfect: 0
+  m_PixelPerfect: 1
   m_ReceivesEvents: 1
   m_OverrideSorting: 0
   m_OverridePixelPerfect: 0
@@ -8953,7 +8954,7 @@ GameObject:
   - component: {fileID: 916341850}
   - component: {fileID: 916341849}
   m_Layer: 5
-  m_Name: you died text
+  m_Name: gameover
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -8999,7 +9000,10 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: YOU DIED
+  m_text: 'GAMEOVER
+
+
+    SCORE: '
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 5493ec193885242a8bb6c38eaf898383, type: 2}
   m_sharedMaterial: {fileID: 3695936419688298059, guid: 5493ec193885242a8bb6c38eaf898383, type: 2}
@@ -9103,7 +9107,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1424976602
 RectTransform:
   m_ObjectHideFlags: 0
