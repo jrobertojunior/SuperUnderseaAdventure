@@ -1,12 +1,17 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class GameManager : MonoBehaviour
 {
   public GameObject player;
   public GameObject camera;
   public float initialCameraVelocity = 0.001f;
+
+  public GameObject menuUI;
+  public GameObject gameoverUI;
+  public GameObject pointsUI;
 
   // menu, gaming, gameover
   private string state = "menu";
@@ -32,6 +37,7 @@ public class GameManager : MonoBehaviour
           {
             state = "gaming";
             gameStarted = true;
+            handleUI(state);
           }
           break;
         }
@@ -46,6 +52,13 @@ public class GameManager : MonoBehaviour
           if (difference > 4.33 || difference < -4.33)
           {
             state = "gameover";
+            handleUI(state);
+            
+            // get textmeshpro component
+            TextMeshPro pointsText = pointsUI.GetComponent<TextMeshPro>();
+            
+            // add points to ui
+            pointsText.text = "Points: " + (int)camera.transform.position.y;
           }
           break;
         }
@@ -56,7 +69,36 @@ public class GameManager : MonoBehaviour
           {
             state = "menu";
             gameStarted = false;
+            handleUI(state);
           }
+          break;
+        }
+    }
+  }
+
+  void handleUI(string state)
+  {
+    switch (state)
+    {
+      case "menu":
+        {
+          menuUI.SetActive(true);
+          gameoverUI.SetActive(false);
+          pointsUI.SetActive(false);
+          break;
+        }
+      case "gaming":
+        {
+          menuUI.SetActive(false);
+          gameoverUI.SetActive(false);
+          pointsUI.SetActive(true);
+          break;
+        }
+      case "gameover":
+        {
+          menuUI.SetActive(false);
+          gameoverUI.SetActive(true);
+          pointsUI.SetActive(true);
           break;
         }
     }
