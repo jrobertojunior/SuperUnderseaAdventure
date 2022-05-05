@@ -15,7 +15,7 @@ ScriptedImporter:
   _deparentInRuntime: 0
   _intGridValueColorsVisible: 0
   _useCompositeCollider: 1
-  _createBackgroundColor: 1
+  _createBackgroundColor: 0
   _intGridValues:
   - _key: Walls_1
     _asset: {instanceID: 0}
