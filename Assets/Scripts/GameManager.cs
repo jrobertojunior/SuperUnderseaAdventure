@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using TMPro;
 
 public class GameManager : MonoBehaviour
@@ -9,7 +10,9 @@ public class GameManager : MonoBehaviour
   public GameObject camera;
   public float cameraVelocity = 1.4f;
   public float cameraVelocityIncrementor = 0.2f;
+  private float initialTime = 0f;
   private float initialHeight;
+  private float initialCameraVelocity;
   public GameObject menuUI;
   public GameObject gameoverUI;
   public GameObject pointsUI;
@@ -21,8 +24,8 @@ public class GameManager : MonoBehaviour
   private bool showingUi = true;
   private bool gameStarted = false;
 
-  private Transform initialCameraPosition = null;
-  private Transform initialPlayerPosition = null;
+  private Vector3 initialCameraPosition;
+  private Vector3 initialPlayerPosition;
 
   void Start()
   {
@@ -30,12 +33,14 @@ public class GameManager : MonoBehaviour
     pointsText = pointsUI.GetComponent<TextMeshProUGUI>();
     initialHeight = camera.transform.position.y;
 
-    initialCameraPosition = camera.transform;
-    initialPlayerPosition = player.transform;
+    initialCameraPosition = camera.transform.position;
+    initialPlayerPosition = player.transform.position;
+    initialCameraVelocity = cameraVelocity;
+
   }
 
 
-  void FixedUpdate()
+  void Update()
   {
     switch (state)
     {
@@ -44,6 +49,7 @@ public class GameManager : MonoBehaviour
           // show menu
           if (Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.D))
           {
+            initialTime = Time.time;
             state = "gaming";
             gameStarted = true;
             handleUI(state);
@@ -52,10 +58,12 @@ public class GameManager : MonoBehaviour
         }
       case "gaming":
         {
-          // every 10 seconds, increment camera velocity
-          if (Time.time % 10 == 0)
+          // every 10 seconds, increment camera velocity (speed caps at 2.2)
+          if (Time.time - initialTime >= 30 && cameraVelocity < 2.2f)
           {
+            initialTime = initialTime + 30;
             cameraVelocity += cameraVelocityIncrementor;
+                        print(cameraVelocity);
           }
           camera.transform.position += new Vector3(0, (-cameraVelocity - cameraVelocityIncrementor) * Time.deltaTime, 0);
 
@@ -68,29 +76,49 @@ public class GameManager : MonoBehaviour
           // print player position relative to this gameobject
           float difference = player.transform.position.y - camera.transform.position.y;
 
-          // if difference is greater than 4.33 or less than -4.33
-          if (difference > 7 || difference < -6)
-          {
+                    // if difference is greater than 4.33 or less than -4.33
+        if (difference > 7 || difference < -6)
+         {
             state = "gameover";
             handleUI(state);
-          }
+        }
+        if (camera.transform.position.y < -293) //checks if the player has won based on camera position
+           {
+           state = "win";
+           handleUI("gameover");
+            }
           break;
         }
       case "gameover":
         {
           gameoverUI.GetComponent<TextMeshProUGUI>().SetText("GAMEOVER\n\nSCORE: " + points);
           // show gameover
-          if (Input.GetKeyDown(KeyCode.Space))
+          if (Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.D))
           {
             state = "menu";
             gameStarted = false;
-            camera.transform.position = initialCameraPosition.position;
-            player.transform.position = initialPlayerPosition.position;
+            cameraVelocity = initialCameraVelocity;
+            camera.transform.position = initialCameraPosition;
+            player.transform.position = initialPlayerPosition;
             handleUI(state);
           }
           break;
         }
-    }
+      case "win":
+       {
+        gameoverUI.GetComponent<TextMeshProUGUI>().SetText("CONGRATULATIONS!\n\nSCORE: " + points);
+         if (Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.D))
+         {
+             state = "menu";
+             gameStarted = false;
+             cameraVelocity = initialCameraVelocity;
+             camera.transform.position = initialCameraPosition;
+             player.transform.position = initialPlayerPosition;
+             handleUI(state);
+          }
+          break;
+          }
+        }
   }
 
   void handleUI(string state)
