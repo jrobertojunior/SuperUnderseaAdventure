@@ -86,11 +86,11 @@ public class Movement2D : MonoBehaviour
 
   private void Update()
   {
-    float input = GetInput().x;
+    /*float input = GetInput().x;
     if (input != 0)
-    {
+    {*/
       _horizontalDirection = GetInput().x;
-    }
+    //}
     _verticalDirection = GetInput().y;
     if (Input.GetButtonDown("Jump")) _jumpBufferCounter = _jumpBufferLength;
     else _jumpBufferCounter -= Time.deltaTime;
