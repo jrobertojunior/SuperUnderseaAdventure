@@ -4,9 +4,11 @@
 <img src="cover.png" alt="super undersea adventure" width="80%"/>
 </p>
 
-Você é um mergulhador que está se aprofundando nos abismos de uma cidade submersa. Tente chegar até o fundo do mar!
+Perdido, no fundo do mar.
 
-O gameplay consiste em andar para a esquerda, direita e pular.
+Acompanhe a aventura de um mergulhador enquanto ele desce ao fundo do mar.
+
+Super Undersea Adventure é um jogo de plataforma vertical com foco na atmosfera e estética, onde o jogador luta para se manter dentro da área delimitada pela câmera enquanto desbrava as profundezas do oceano.
 
 [Vídeo no youtube](https://www.youtube.com/watch?v=x_fmCbcdn_I)
 
