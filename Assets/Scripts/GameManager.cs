@@ -91,9 +91,9 @@ public class GameManager : MonoBehaviour
         }
       case "gameover":
         {
-          gameoverUI.GetComponent<TextMeshProUGUI>().SetText("GAMEOVER\n\nSCORE: " + points);
+          gameoverUI.GetComponent<TextMeshProUGUI>().SetText("GAMEOVER\n\nSCORE: " + points + "\n\nPRESS R TO PLAY AGAIN");
           // show gameover
-          if (Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.D))
+          if (Input.GetKeyDown(KeyCode.R))
           {
             state = "menu";
             gameStarted = false;
@@ -106,8 +106,8 @@ public class GameManager : MonoBehaviour
         }
       case "win":
        {
-        gameoverUI.GetComponent<TextMeshProUGUI>().SetText("CONGRATULATIONS!\n\nSCORE: " + points);
-         if (Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.D))
+        gameoverUI.GetComponent<TextMeshProUGUI>().SetText("CONGRATULATIONS!\n\nSCORE: " + points + "\n\nPRESS R TO PLAY AGAIN");
+         if (Input.GetKeyDown(KeyCode.R))
          {
              state = "menu";
              gameStarted = false;
